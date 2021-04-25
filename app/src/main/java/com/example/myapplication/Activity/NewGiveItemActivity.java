@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Activity;
 
 import android.Manifest;
 import android.content.DialogInterface;
@@ -29,6 +29,10 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import com.example.myapplication.PhotoModeDialog;
+import com.example.myapplication.Interface.PhotoModeListener;
+import com.example.myapplication.Objects.Product;
+import com.example.myapplication.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.button.MaterialButton;
@@ -49,7 +53,6 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class NewGiveItemActivity extends AppCompatActivity implements PhotoModeListener {
     private static final String TAG = "pttt";

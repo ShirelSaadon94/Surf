@@ -15,6 +15,8 @@ import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 import java.util.ArrayList;
 
 import com.bumptech.glide.Glide;
+import com.example.myapplication.Interface.ItemDetailsListener;
+import com.example.myapplication.Objects.Product;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.card.MaterialCardView;
@@ -53,7 +55,7 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
     public void onBindViewHolder(@NonNull MyRecyclerViewAdapter.ViewHolder holder, int position) {
         Log.d(TAG, "onBindViewHolder: Got item: " + items.get(position).toString());
         Product temp = items.get(position);
-        holder.itemPrice.setText(temp.price);
+        holder.itemPrice.setText(temp.getPrice());
         holder.itemName.setText(temp.getName());
         holder.itemState.setText(temp.getState());
         holder.postDate.setText(temp.getDate().toString());

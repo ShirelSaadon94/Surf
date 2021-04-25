@@ -19,7 +19,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,15 +27,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ForecastActivity"
+            android:name=".Activity.ForecastActivity"
             android:configChanges="orientation"
             />
         <activity
-            android:name=".ProductsActivity"
+            android:name=".Activity.ProductsActivity"
             android:configChanges="orientation"
             />
         <activity
-            android:name=".NewGiveItemActivity"
+            android:name=".Activity.NewGiveItemActivity"
             android:configChanges="orientation"
             />
     </application>

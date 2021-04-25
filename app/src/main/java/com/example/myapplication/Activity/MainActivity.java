@@ -1,7 +1,14 @@
-package com.example.myapplication;
+package com.example.myapplication.Activity;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -10,15 +17,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.GridLayout;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
-
+import com.example.myapplication.R;
+import com.example.myapplication.Objects.WaveForecast;
+import com.example.myapplication.Fragments.WeatherAirFragment;
+import com.example.myapplication.Fragments.WeatherFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
-import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
@@ -36,7 +45,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-public class ForecastActivity extends AppCompatActivity implements WeatherFragment.OnFragmentInteractionListener, WeatherAirFragment.OnFragmentInteractionListener  {
+public class MainActivity extends AppCompatActivity implements WeatherFragment.OnFragmentInteractionListener, WeatherAirFragment.OnFragmentInteractionListener {
+    //for location
     private static final int PERMISSION_REGULAR_LOCATION_REQUEST_CODE = 133;
     private static final int PERMISSION_BACKGROUND_LOCATION_REQUEST_CODE = 134;
     FusedLocationProviderClient fusedLocationProviderClient;
@@ -48,17 +58,51 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
     ArrayList<WaveForecast> waveForecastArray;
     WaveForecast waveForecast;
 
+    GridLayout gridLayout;
 
 
     private static final String TAG = "pttt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        setContentView(R.layout.activity_main);
+//        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
+//        request();
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_forecast);
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(ForecastActivity.this);
-        request();
+        setContentView(R.layout.activity_main);
+
+        gridLayout=(GridLayout)findViewById(R.id.mainGrid);
+
+        setSingleEvent(gridLayout);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("message");
+
+        myRef.setValue("Hello, World!");
+
     }
+
+    private void setSingleEvent(GridLayout gridLayout) {
+
+            CardView cardView=(CardView)gridLayout.getChildAt(0);
+            cardView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i= new Intent(MainActivity.this, ProductsActivity.class);
+                    startActivity(i);
+                }
+            });
+            CardView cardViewProduct=(CardView)gridLayout.getChildAt(1);
+            cardViewProduct.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i= new Intent(MainActivity.this, ForecastActivity.class);
+                startActivity(i);
+            }
+        });
+
+        }
+
 
 
 
@@ -196,6 +240,8 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
             public void onResponse(Response response) throws IOException {
                 String responseString = response.body().string();
                 parseJson(responseString);
+
+
                 Log.d(TAG, "onResponse: " + responseString.toString());
             }
         });
@@ -206,10 +252,12 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
 
 
     private void parseJson(String responseString) {
-        Log.d(TAG, "parseJson: ");
+
+
+
+
 
         try {
-            Log.d(TAG, "parseJson: ");
             waveForecastArray = new ArrayList<>();
 
             JSONObject all = new JSONObject(responseString);
@@ -228,10 +276,9 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
             int realswellPeriod= (int)Math.round ((double) swellPeriod.get("icon"));
             int realwindDirection= (int)Math.round ((double) windDirection.get("icon"));
             int realwindSpeed100m= (int)Math.round ((double) windSpeed100m.get("noaa")*3.6);
-            int realwaterTemperature= (int)Math.round ((double) waterTemperature.get("noaa"));
+            int realwaterTemperature= (int)Math.round ((double) waterTemperature.get("meto"));
             int maxwaveHeight= (int)Math.round (((double)waveHeight.get("noaa"))*10);
-            Log.d(TAG, "parseJson: "+"Ddd");
-            int minwaveHeight= (int)Math.round ((double)waveHeight.get("sg")*10);
+            int minwaveHeight= (int)Math.round ((double)waveHeight.get("dwd")*10);
 
 
 
@@ -262,13 +309,12 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
 //                waveForecastArray.add(new WaveForecast(myDate,realwindSpeed100m,realswellPeriod,realwaterTemperature,realswellDirection,realwindDirection,maxwaveHeight*10,minwaveHeight*10));
 //
 //            }
-            this.runOnUiThread(new Runnable() {
+            MainActivity.this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
 
 
                     weatherFragment = new WeatherFragment(realwaterTemperature,realwindSpeed100m,realswellPeriod,realswellDirection,realwindDirection,maxwaveHeight,minwaveHeight,city);
-                    Log.d(TAG, "run: ");
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.firstFragment, weatherFragment);
                     transaction.commit();

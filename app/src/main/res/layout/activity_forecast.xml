@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:orientation="vertical"
     android:layout_centerHorizontal="true"
-    tools:context=".MainActivity">
+    tools:context=".Activity.MainActivity">
 
 
     <FrameLayout

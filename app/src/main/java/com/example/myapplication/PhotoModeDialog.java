@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 
+import com.example.myapplication.Interface.PhotoModeListener;
+
 
 public class PhotoModeDialog extends Dialog {
     private static final String TAG = "Dogood";

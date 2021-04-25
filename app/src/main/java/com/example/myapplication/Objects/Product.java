@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.Objects;
 
 import java.util.Date;
 import java.util.UUID;
