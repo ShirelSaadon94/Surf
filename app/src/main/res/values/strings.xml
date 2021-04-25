@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="weather_icons_api_key">65006e2c57a24ba58e5ab5054ffc7a80</string>
+    <string name="wave">3f34e2b8-a077-11eb-bf4d-0242ac130002-3f34e34e-a077-11eb-bf4d-0242ac130002</string>
+    <string name="north">North</string>
+    <string name="ne">North East</string>
+    <string name="east">East</string>
+    <string name="es">South East</string>
+    <string name="south">South</string>
+    <string name="sw">South West</string>
+    <string name="west">West</string>
+    <string name="nw">North West</string>
+    <string name="cancel" />
+    <string name="ok" />
+    <string name="check_internet_connection" />
+    <string name="permission_denied" />
+    <string name="permission_denied_explication_storage" />
+
+
+</resources>
