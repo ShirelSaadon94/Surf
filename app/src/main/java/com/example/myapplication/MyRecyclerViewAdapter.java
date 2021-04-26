@@ -28,9 +28,8 @@ import com.google.firebase.storage.StorageReference;
 
 public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder> {
 
-    private static final String TAG = "Dogood";
-    private static final String GIVE_ITEM = "giveItem";
-    private static final String OWNER_USER = "ownerUser";
+    private static final String TAG = "pttt";
+
 
     private Context context;
     private ArrayList<Product> items;
