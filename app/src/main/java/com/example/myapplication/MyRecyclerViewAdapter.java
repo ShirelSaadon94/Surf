@@ -1,14 +1,20 @@
 package com.example.myapplication;
 
+import android.content.DialogInterface;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.content.Context;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
@@ -100,8 +106,23 @@ public class MyRecyclerViewAdapter extends RecyclerView.Adapter<MyRecyclerViewAd
         });
     }
     private void openItemDetails(int position) {
-        Log.d(TAG, "openItemDetails: ");
-        ((ItemDetailsListener) context).getSelectedItem(items.get(position), true);
+        AlertDialog.Builder alertbox = new AlertDialog.Builder(context);
+        alertbox.setMessage(items.get(position).getDescription());
+        alertbox.setTitle("Descrption");
+
+
+        alertbox.setNeutralButton("OK",
+                new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface arg0,
+                                        int arg1) {
+
+                    }
+                });
+        alertbox.show();
+
+
+
     }
 
 

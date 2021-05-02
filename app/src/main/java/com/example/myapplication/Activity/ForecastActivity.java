@@ -3,12 +3,15 @@ package com.example.myapplication.Activity;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Looper;
+import android.os.MessageQueue;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -16,6 +19,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
+
+import com.example.myapplication.Objects.DayForecast;
 import com.example.myapplication.R;
 import com.example.myapplication.Objects.WaveForecast;
 import com.example.myapplication.Fragments.WeatherAirFragment;
@@ -40,17 +45,26 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import lecho.lib.hellocharts.model.Axis;
+import lecho.lib.hellocharts.model.AxisValue;
+import lecho.lib.hellocharts.model.Line;
+import lecho.lib.hellocharts.model.LineChartData;
+import lecho.lib.hellocharts.model.PointValue;
+import lecho.lib.hellocharts.model.Viewport;
+import lecho.lib.hellocharts.view.LineChartView;
+
 public class ForecastActivity extends AppCompatActivity implements WeatherFragment.OnFragmentInteractionListener, WeatherAirFragment.OnFragmentInteractionListener {
     private static final int PERMISSION_REGULAR_LOCATION_REQUEST_CODE = 133;
     private static final int PERMISSION_BACKGROUND_LOCATION_REQUEST_CODE = 134;
     FusedLocationProviderClient fusedLocationProviderClient;
     Location currentLocation;
     String city;
-    WeatherAirFragment weatherAirFragment;
     WeatherFragment weatherFragment;
     OkHttpClient client = new OkHttpClient();
-    ArrayList<WaveForecast> waveForecastArray;
+    ArrayList<DayForecast> waveForecastArray;
     WaveForecast waveForecast;
+    String[] axisData;
+    int[] yAxisData;
 
 
 
@@ -60,11 +74,59 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast);
+
+
+
+        requestFirstLocationPermission();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(ForecastActivity.this);
-        request();
+        axisData=new String[4];
+        yAxisData=new int[4];
     }
 
 
+
+    public void x(){
+        LineChartView lineChartView = findViewById(R.id.chart);
+
+
+        List yAxisValues = new ArrayList();
+        List axisValues = new ArrayList();
+        Line line = new Line(yAxisValues);
+        for(int i = 0; i < axisData.length; i++){
+            axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
+        }
+
+        for (int i = 0; i < yAxisData.length; i++){
+            yAxisValues.add(new PointValue(i, yAxisData[i]));
+        }
+        List lines = new ArrayList();
+        lines.add(line);
+        LineChartData data = new LineChartData();
+        data.setLines(lines);
+        lineChartView.setLineChartData(data);
+        Axis axis = new Axis();
+        axis.setValues(axisValues);
+        data.setAxisXBottom(axis);
+        Axis yAxis = new Axis();
+        data.setAxisYLeft(yAxis);
+        line = new Line(yAxisValues).setColor(Color.parseColor("#03A9F4"));
+        axis.setTextSize(8);
+        axis.setTextColor(R.color.purple_200);
+        data.setAxisXBottom(axis);
+
+
+        yAxis.setName("Height WAVE");
+        yAxis.setTextColor(Color.parseColor("#03A9F4"));
+        yAxis.setTextSize(8);
+        data.setAxisYLeft(yAxis);
+        lineChartView.setLineChartData(data);
+        Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
+        viewport.top = 10;
+        lineChartView.setMaximumViewport(viewport);
+        lineChartView.setCurrentViewport(viewport);
+
+
+    }
 
     public void getCity() throws IOException {
         Log.d(TAG, "getCity: ");
@@ -94,6 +156,7 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
                                 getCity();
                                 Log.d(TAG, "onSuccess: " + city);
                                 getWaveForecast();
+
 
                             } catch (IOException e) {
                                 e.printStackTrace();
@@ -226,6 +289,7 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
             JSONObject waterTemperature = (JSONObject) urlContainer.get("waterTemperature");
             JSONObject waveHeight = (JSONObject) urlContainer.get("waveHeight");
             String ackwardDate = (String)urlContainer.get("time");
+            Log.d(TAG, "parseJson222222222: "+ackwardDate);
             SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss+mm:mm");
             Date myDate = myFormat.parse(ackwardDate);
             int realswellDirection= (int)Math.round ((double)  swellDirection.get("icon"));
@@ -239,33 +303,36 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
 
 
 
-            ArrayList<JSONObject> dailyArray = new ArrayList<>();
-//            for (int i = 1; i < 24; i++) {
-//                dailyArray.add((JSONObject) byHour.get(i));
-//                Log.d(TAG, "parseJson: "+(JSONObject) byHour.get(i));
-//            }
-//
-//            for (JSONObject object : dailyArray) {
-//                JSONObject swellDirection = (JSONObject) object.get("swellDirection");
-//                JSONObject swellPeriod = (JSONObject) object.get("swellPeriod");
-//                JSONObject windDirection = (JSONObject) object.get("windDirection");
-//                JSONObject windSpeed100m = (JSONObject) object.get("windSpeed100m");
-//                JSONObject waterTemperature = (JSONObject) object.get("waterTemperature");
-//                JSONObject waveHeight = (JSONObject) object.get("waveHeight");
-//                String ackwardDate = (String)object.get("time");
-//                SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss+mm:mm");
-//                Date myDate = myFormat.parse(ackwardDate);
-//
-//                int realswellDirection= (int)Math.round ((double)  swellDirection.get("noaa"));
-//                int realswellPeriod= (int)Math.round ((double) swellPeriod.get("noaa"));
-//                int realwindDirection= (int)Math.round ((double) windDirection.get("icon"));
-//                int realwindSpeed100m= (int)Math.round ((double) windSpeed100m.get("noaa"));
-//                int realwaterTemperature= (int)Math.round ((double) waterTemperature.get("noaa"));
-//                int maxwaveHeight= (int)Math.round (((double)waveHeight.get("noaa"))*10);
-//                int minwaveHeight= (int)Math.round ((double)waveHeight.get("dwd")*10);
-//                waveForecastArray.add(new WaveForecast(myDate,realwindSpeed100m,realswellPeriod,realwaterTemperature,realswellDirection,realwindDirection,maxwaveHeight*10,minwaveHeight*10));
-//
-//            }
+
+                int k=0;
+                for(int z=0;z<96;z+=24){
+                    urlContainer = (JSONObject) byHour.get(z);
+                    Log.d(TAG, "parseJson: "+urlContainer.toString());
+                    JSONObject waveHeight1 = (JSONObject) ((JSONObject) urlContainer.get("waveHeight"));
+                    int maxwaveHeight1= (int)Math.round (((double)waveHeight1.get("noaa"))*10);
+                    String ackwardDate1 = (String)urlContainer.get("time");
+                    SimpleDateFormat myFormat1 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss+mm:mm");
+                    Date myDate1 = myFormat.parse(ackwardDate1);
+                    SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+                    String dayOfTheWeek = sdf.format(myDate1);
+                    DayForecast dayForecast=new DayForecast(ackwardDate1,maxwaveHeight1,myDate1);
+                    axisData[k]=dayOfTheWeek;
+                    yAxisData[k]=maxwaveHeight1;
+                    waveForecastArray.add(dayForecast);
+                    k+=1;
+
+            }
+                x();
+
+            for(int i=0;i<4;i++){
+                Log.d(TAG, "parseJson: "+axisData[i]+yAxisData[i]);
+            }
+
+
+
+
+            Log.d(TAG, "parseJson: "+waveForecastArray.toString());
+
             this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
@@ -276,6 +343,7 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.firstFragment, weatherFragment);
                     transaction.commit();
+
                 }
             });
         } catch (Exception e) {

@@ -13,101 +13,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
+        android:textColor="@color/accent_material_light"
         android:text="Wave Forecast"
-        android:textSize="28sp" />
+        android:textSize="20sp" />
 
-
-    <LinearLayout
-        android:backgroundTint="#F1F8FB"
-
-        android:id="@+id/linearLayout9"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/parent_rl"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginTop="22dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginRight="0dp"
-        android:background="@color/white"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <FrameLayout
-            android:id="@+id/twoFragment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="6dp"
-            android:padding="6dp">
-
-        </FrameLayout>
-
-        <LinearLayout
-
-
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="6dp"
-            android:clipToPadding="true"
-            android:orientation="vertical"
-            android:padding="6dp"
-            android:textColor="#000000">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="0dp"
-                android:text="Wave"
-                android:textColor="#1F2020"
-                android:textSize="18sp" />
-
-
-            <TextView
-                android:id="@+id/fragment_wave_cm"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="0dp"
-                android:text="19"
-
-                android:textColor="#2196F3"
-                android:textSize="28sp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_margin="6dp"
-                android:text="Cm"
-                android:textSize="12sp" />
-
-
-        </LinearLayout>
-
-
-
-
-
-
-
-    </LinearLayout>
 
     <LinearLayout
 
         android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+
+        android:layout_width="407dp"
+        android:layout_height="169dp"
         android:layout_below="@id/parent_rl"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginTop="205dp"
-        android:layout_marginEnd="-11dp"
-        android:layout_marginRight="-11dp"
+        android:layout_marginTop="142dp"
+        android:layout_marginEnd="-5dp"
+        android:layout_marginRight="-5dp"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="horizontal">
@@ -115,11 +38,11 @@
 
         <LinearLayout
 
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_margin="6dp"
-            android:background="#F1F8FB"
+            android:background="#E0F6F4"
             android:clipToPadding="true"
             android:orientation="vertical"
             android:padding="6dp"
@@ -131,7 +54,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:text="Water"
-                android:textSize="14sp" />
+                android:textSize="4sp" />
 
             <TextView
                 android:id="@+id/fragment_water_temp"
@@ -141,7 +64,7 @@
                 android:layout_margin="10dp"
                 android:text="19"
                 android:textColor="@color/purple_500"
-                android:textSize="22sp" />
+                android:textSize="8sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -149,17 +72,17 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:text="C°"
-                android:textSize="12sp" />
+                android:textSize="4sp" />
 
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="82dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_margin="6dp"
-            android:background="#F1F8FB"
+            android:background="#7CB6CF"
             android:orientation="vertical"
             android:padding="6dp"
 
@@ -171,11 +94,11 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:text="Wind"
-                android:textSize="14sp" />
+                android:textSize="4sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
@@ -186,7 +109,7 @@
                     android:layout_margin="10dp"
                     android:text="19"
                     android:textColor="@color/teal_200"
-                    android:textSize="22sp" />
+                    android:textSize="8sp" />
 
                 <TextView
                     android:id="@+id/fragment_wind1"
@@ -197,7 +120,7 @@
                     android:layout_marginEnd="@+id/fragment_wind"
                     android:text="Km/H"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
+                    android:textSize="4sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -215,7 +138,7 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:text="North"
-                    android:textSize="12sp" />
+                    android:textSize="4sp" />
 
                 <ImageView
                     android:id="@+id/fragment_image_windDirection"
@@ -234,15 +157,13 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="82dp"
+            android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_margin="6dp"
-
             android:background="#F1F8FB"
             android:orientation="vertical"
             android:padding="6dp"
-
 
             android:textColor="#000000">
 
@@ -252,11 +173,11 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:text="Swell"
-                android:textSize="14sp" />
+                android:textSize="4sp" />
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
                 <TextView
@@ -266,25 +187,23 @@
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:text="19"
-                    android:textColor="@color/common_google_signin_btn_text_dark_disabled"
-                    android:textSize="22sp" />
+                    android:textColor="@color/teal_200"
+                    android:textSize="8sp" />
 
                 <TextView
-                    android:id="@+id/fragment_swell1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
-                    android:text="S"
+                    android:layout_marginEnd="@+id/fragment_wind"
+                    android:text="Km/H"
                     android:textColor="@color/black"
-                    android:textSize="14sp" />
-
-
+                    android:textSize="4sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/linearLayout3"
-                android:layout_width="wrap_content"
+                android:layout_width="129dp"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentRight="true"
@@ -292,12 +211,12 @@
 
                 <TextView
                     android:id="@+id/fragment_Diretion_swell"
-                    android:layout_width="30dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_margin="10dp"
                     android:text="North"
-                    android:textSize="12sp" />
+                    android:textSize="4sp" />
 
                 <ImageView
                     android:id="@+id/fragment_image_swelDirection"
@@ -308,15 +227,77 @@
                     android:maxWidth="42dp"
                     android:maxHeight="42dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/d_east_south" />
+                    android:src="@drawable/d_south" />
 
             </LinearLayout>
 
 
         </LinearLayout>
 
+        <LinearLayout
+
+            android:layout_width="80dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_margin="6dp"
+            android:background="#C2EAFB"
+            android:clipToPadding="true"
+            android:orientation="vertical"
+            android:padding="6dp"
+            android:textColor="#000000">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="Wave"
+                android:textSize="4sp" />
+
+            <TextView
+                android:id="@+id/fragment_wave_cm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="14"
+                android:textColor="@color/abc_decor_view_status_guard"
+                android:textSize="8sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="10dp"
+                android:text="Cm"
+                android:textSize="4sp" />
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
+
+    <FrameLayout
+
+        android:id="@+id/twoFragment"
+        android:layout_width="278dp"
+        android:layout_height="134dp"
+        android:layout_below="@id/parent_rl"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:layout_marginStart="6dp"
+        android:layout_marginLeft="37dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="76dp"
+        android:layout_marginRight="76dp"
+        android:layout_marginBottom="6dp"
+        android:padding="6dp">
+
+    </FrameLayout>
 
 
 </RelativeLayout>

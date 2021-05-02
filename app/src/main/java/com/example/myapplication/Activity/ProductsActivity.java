@@ -48,21 +48,6 @@ public class ProductsActivity extends AppCompatActivity {
 
     }
 
-//    private void initBtnAddEvent(){
-//        Log.d(TAG, "initBtnAddEvent: ");
-//        //floatingActionButton=findViewById(R.id.BTN_addEventButton);
-//        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                openNewReviewEvent();
-//            }
-//        });
-//    }
-
-    private void openNewReviewEvent() {
-        Log.d(TAG, "openDialog: Opening new  dialog");
-
-    }
 
     public void reviewsList() {
         Log.d(TAG, "reviewsList: ");
