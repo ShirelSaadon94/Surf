@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +54,7 @@ public class WeatherFragment extends Fragment {
     private int minWave;
     private int maxWave;
     WeatherAirFragment weatherAirFragment;
+    GridLayout gridLayout;
 
     View view;
 
@@ -60,6 +62,7 @@ public class WeatherFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "onCreateView");
+
 
         if (view == null) {
             view = inflater.inflate(R.layout.fragment_weather, container, false);
@@ -117,6 +120,7 @@ public class WeatherFragment extends Fragment {
         Log.d(TAG, "initViews: " + this.toString());
 
         // Weather fragment
+
         textViewWave = view.findViewById(R.id.fragment_wave_cm);
         textViewWater = view.findViewById(R.id.fragment_water_temp);
         textViewWindDirection = view.findViewById(R.id.fragment_Diretion_wind);
@@ -130,8 +134,7 @@ public class WeatherFragment extends Fragment {
 
 
 
-        //textViewWave.setText(maxWave + "-" + minWave + "cm");
-        //imageSwelDirection.setImageResource(R.drawable.d_north);
+        textViewWave.setText(""+maxWave);
         String s = convertDegreeToCardinalDirection(swelD, imageSwelDirection);
         textViewSwelDirection.setText(s);
         String w = convertDegreeToCardinalDirection(windD, imageWindDirection);

@@ -83,10 +83,6 @@ public class NewGiveItemActivity extends AppCompatActivity implements PhotoModeL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_give_item);
-//        String userJson = getIntent().getStringExtra(CURRENT_USER);
-//        itemCount = getIntent().getIntExtra(ITEM_COUNT, 0);
-//        Gson gson = new Gson();
-//        currentUser = gson.fromJson(userJson, User.class);
 
         initViews();
         setViewListeners();

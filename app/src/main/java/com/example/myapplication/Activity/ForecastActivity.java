@@ -74,9 +74,6 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast);
-
-
-
         requestFirstLocationPermission();
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(ForecastActivity.this);
         axisData=new String[4];
@@ -110,14 +107,14 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
         Axis yAxis = new Axis();
         data.setAxisYLeft(yAxis);
         line = new Line(yAxisValues).setColor(Color.parseColor("#03A9F4"));
-        axis.setTextSize(8);
-        axis.setTextColor(R.color.purple_200);
+        axis.setTextSize(4);
+        axis.setTextColor(Color.parseColor("#FF9800"));
         data.setAxisXBottom(axis);
 
 
         yAxis.setName("Height WAVE");
         yAxis.setTextColor(Color.parseColor("#03A9F4"));
-        yAxis.setTextSize(8);
+        yAxis.setTextSize(4);
         data.setAxisYLeft(yAxis);
         lineChartView.setLineChartData(data);
         Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
@@ -322,7 +319,7 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
                     k+=1;
 
             }
-                x();
+                //x();
 
             for(int i=0;i<4;i++){
                 Log.d(TAG, "parseJson: "+axisData[i]+yAxisData[i]);

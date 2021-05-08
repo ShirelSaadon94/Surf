@@ -31,6 +31,10 @@
             android:configChanges="orientation"
             />
         <activity
+            android:name=".Activity.DisplayRestaurants"
+            android:configChanges="orientation"
+            />
+        <activity
             android:name=".Activity.ProductsActivity"
             android:configChanges="orientation"
             />
