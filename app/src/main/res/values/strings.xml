@@ -2,10 +2,10 @@
     <string name="app_name">SURF</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="weather_icons_api_key">65006e2c57a24ba58e5ab5054ffc7a80</string>
+    <string name="weather_icons_api_key">04977a27ee7948beab6a6b65ba3614a2</string>
     <string name="api_key">AIzaSyAXKuBMkrUW0J99RPpuOgC02rmS1DZNcCY</string>
     <string name="api_key_map">AIzaSyCHHNobPX56wtfswUszic7pXS7LJbbcVaM</string>
-    <string name="wave">5944d8cc-9be3-11eb-bf4d-0242ac130002-5944d94e-9be3-11eb-bf4d-0242ac130002</string>
+    <string name="wave">641a15c8-97ec-11eb-a242-0242ac130002-641a164a-97ec-11eb-a242-0242ac130002</string>
     <string name="north">North</string>
     <string name="ne">North East</string>
     <string name="east">East</string>

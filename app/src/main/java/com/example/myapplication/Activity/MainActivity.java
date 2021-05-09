@@ -4,14 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
@@ -27,38 +24,24 @@ import android.widget.GridLayout;
 import com.example.myapplication.R;
 import com.example.myapplication.Objects.WaveForecast;
 import com.example.myapplication.Fragments.WeatherAirFragment;
-import com.example.myapplication.Fragments.WeatherFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.okhttp.Callback;
 import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.Response;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.TimeZone;
 
 
-public class MainActivity extends AppCompatActivity implements WeatherFragment.OnFragmentInteractionListener, WeatherAirFragment.OnFragmentInteractionListener {
+public class MainActivity extends AppCompatActivity implements WeatherAirFragment.OnFragmentInteractionListener {
 
     FusedLocationProviderClient fusedLocationProviderClient;
     Location currentLocation;
     String city;
     private static final int PERMISSION_REGULAR_LOCATION_REQUEST_CODE = 133;
     private static final int PERMISSION_BACKGROUND_LOCATION_REQUEST_CODE = 134;
-    WeatherFragment weatherFragment;
+
     OkHttpClient client = new OkHttpClient();
     ArrayList<WaveForecast> waveForecastArray;
 
@@ -130,10 +113,7 @@ public class MainActivity extends AppCompatActivity implements WeatherFragment.O
 
 
         }
-    @Override
-    public void messageFromParentFragment(Uri uri) {
-        Log.i("TAG", "received communication from parent fragment");
-    }
+
 
     @Override
     public void messageFromChildFragment(Uri uri) {

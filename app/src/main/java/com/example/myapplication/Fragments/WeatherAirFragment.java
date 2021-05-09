@@ -27,11 +27,9 @@ public class WeatherAirFragment extends Fragment {
     public static final String TAG = "pttt";
     private OnFragmentInteractionListener mListener;
 
-    public WeatherAirFragment(String city, String descrption,String iconId, String temp) {
+    public WeatherAirFragment(String city) {
         this.city = city;
-        this.descrption = descrption;
-        this.temp = temp;
-        this.iconId=iconId;
+
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

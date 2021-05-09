@@ -10,8 +10,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Looper;
-import android.os.MessageQueue;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,11 +18,15 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import com.example.myapplication.Fragments.FragmentHeader;
+import com.example.myapplication.Fragments.FragmentHeightWave;
+import com.example.myapplication.Fragments.FragmentSwell;
+import com.example.myapplication.Fragments.FragmentWater;
+import com.example.myapplication.Fragments.FragmentWind;
 import com.example.myapplication.Objects.DayForecast;
 import com.example.myapplication.R;
 import com.example.myapplication.Objects.WaveForecast;
 import com.example.myapplication.Fragments.WeatherAirFragment;
-import com.example.myapplication.Fragments.WeatherFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -53,13 +55,17 @@ import lecho.lib.hellocharts.model.PointValue;
 import lecho.lib.hellocharts.model.Viewport;
 import lecho.lib.hellocharts.view.LineChartView;
 
-public class ForecastActivity extends AppCompatActivity implements WeatherFragment.OnFragmentInteractionListener, WeatherAirFragment.OnFragmentInteractionListener {
+public class ForecastActivity extends AppCompatActivity implements FragmentHeader.OnFragmentInteractionListener,FragmentWater.OnFragmentInteractionListener, FragmentWind.OnFragmentInteractionListener ,FragmentHeightWave.OnFragmentInteractionListener,FragmentSwell.OnFragmentInteractionListener, WeatherAirFragment.OnFragmentInteractionListener {
     private static final int PERMISSION_REGULAR_LOCATION_REQUEST_CODE = 133;
     private static final int PERMISSION_BACKGROUND_LOCATION_REQUEST_CODE = 134;
     FusedLocationProviderClient fusedLocationProviderClient;
     Location currentLocation;
     String city;
-    WeatherFragment weatherFragment;
+    FragmentHeader weatherFragment;
+    FragmentHeightWave fragmentHeightWave;
+    FragmentSwell fragmentSwell;
+    FragmentWind fragmentWind;
+    FragmentWater fragmentWater;
     OkHttpClient client = new OkHttpClient();
     ArrayList<DayForecast> waveForecastArray;
     WaveForecast waveForecast;
@@ -110,15 +116,13 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
         axis.setTextSize(4);
         axis.setTextColor(Color.parseColor("#FF9800"));
         data.setAxisXBottom(axis);
-
-
         yAxis.setName("Height WAVE");
         yAxis.setTextColor(Color.parseColor("#03A9F4"));
         yAxis.setTextSize(4);
         data.setAxisYLeft(yAxis);
         lineChartView.setLineChartData(data);
         Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
-        viewport.top = 10;
+        viewport.top = 100;
         lineChartView.setMaximumViewport(viewport);
         lineChartView.setCurrentViewport(viewport);
 
@@ -319,7 +323,7 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
                     k+=1;
 
             }
-                //x();
+                x();
 
             for(int i=0;i<4;i++){
                 Log.d(TAG, "parseJson: "+axisData[i]+yAxisData[i]);
@@ -333,13 +337,46 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
             this.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-
-
-                    weatherFragment = new WeatherFragment(realwaterTemperature,realwindSpeed100m,realswellPeriod,realswellDirection,realwindDirection,maxwaveHeight,minwaveHeight,city);
+                    weatherFragment = new FragmentHeader(city);
                     Log.d(TAG, "run: ");
                     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.firstFragment, weatherFragment);
+                    transaction.replace(R.id.twoFragment, weatherFragment);
                     transaction.commit();
+
+                     fragmentHeightWave= new FragmentHeightWave(maxwaveHeight);
+                    Log.d(TAG, "run: ");
+                    FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
+                    transaction1.replace(R.id.fragment_wave, fragmentHeightWave);
+                    transaction1.commit();
+
+                    fragmentSwell=new FragmentSwell(realswellPeriod,realswellDirection);
+                    FragmentTransaction transaction2 = getSupportFragmentManager().beginTransaction();
+                    transaction2.replace(R.id.fragment_swell, fragmentSwell);
+                    transaction2.commit();
+
+                    fragmentWind=new FragmentWind(realwindSpeed100m,realwindDirection);
+                    FragmentTransaction transaction3 = getSupportFragmentManager().beginTransaction();
+                    transaction3.replace(R.id.fragment_wind, fragmentWind);
+                    transaction3.commit();
+
+                    fragmentWater=new FragmentWater(realwaterTemperature);
+                    FragmentTransaction transaction4 = getSupportFragmentManager().beginTransaction();
+                    transaction4.replace(R.id.fragment_water, fragmentWater);
+                    transaction4.commit();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                 }
             });
@@ -348,12 +385,6 @@ public class ForecastActivity extends AppCompatActivity implements WeatherFragme
         }
 
     }
-
-
-
-
-
-
 
 
     public String convertDegreeToCardinalDirection(int directionInDegrees){
