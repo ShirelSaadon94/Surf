@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/background"
+    android:background="@drawable/b2"
     android:weightSum="10"
     tools:context=".Activity.MainActivity">
 
@@ -52,8 +52,9 @@
                     android:layout_height="42dp"
                     android:fontFamily="casual"
                     android:text="WAVE"
-                    android:textColor="#000"
-                    android:textSize="20sp"
+                    android:textColor="#2196F3"
+                    android:textSize="15sp"
+
                     android:textStyle="bold" />
 
                 <ImageView
@@ -92,8 +93,8 @@
                     android:layout_height="42dp"
                     android:fontFamily="casual"
                     android:text="Sell-Buy"
-                    android:textColor="#000"
-                    android:textSize="20sp"
+                    android:textColor="#2196F3"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <ImageView
@@ -134,8 +135,8 @@
                     android:layout_height="42dp"
                     android:fontFamily="casual"
                     android:text="Hanger?"
-                    android:textColor="#000"
-                    android:textSize="20sp"
+                    android:textColor="#2196F3"
+                    android:textSize="15sp"
                     android:textStyle="bold" />
 
                 <ImageView

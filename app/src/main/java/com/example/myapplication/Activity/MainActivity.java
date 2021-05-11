@@ -69,23 +69,19 @@ public class MainActivity extends AppCompatActivity implements WeatherAirFragmen
         return true;
     }
 
-    public void onGroupItemClick(MenuItem item) {
-        // One of the group items (using the onClick attribute) was clicked
-        // The item parameter passed here indicates which item it is
-        // All other menu item clicks are handled by <code><a href="/reference/android/app/Activity.html#onOptionsItemSelected(android.view.MenuItem)">onOptionsItemSelected()</a></code>
-    }
     private void setSingleEvent(GridLayout gridLayout) {
+        Double longitude = currentLocation.getLongitude();
+        Double latitude = currentLocation.getLatitude();
+        String longit = Double.toString(longitude);
+        String lat = Double.toString(latitude);
+
             CardView cardView=(CardView)gridLayout.getChildAt(2);
             cardView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    Log.d(TAG, "startRestaurants: "+longit +lat);
                     Log.d(TAG, "onClick: Resturant");
                     Intent intent = new Intent(MainActivity.this, DisplayRestaurants.class);
-                    Double longitude = currentLocation.getLongitude();
-                    Double latitude = currentLocation.getLatitude();
-                    String longit = Double.toString(longitude);
-                    String lat = Double.toString(latitude);
-                    Log.d(TAG, "startRestaurants: "+longit +lat);
                     intent.putExtra("long", longit);
                     intent.putExtra("lat", lat);
                     startActivity(intent);
@@ -104,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements WeatherAirFragmen
             @Override
             public void onClick(View view) {
                 Intent i= new Intent(MainActivity.this, ForecastActivity.class);
+                i.putExtra("long", longit);
+                i.putExtra("lat", lat);
                 startActivity(i);
             }
         });

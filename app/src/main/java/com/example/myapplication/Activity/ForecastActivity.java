@@ -298,32 +298,32 @@ public class ForecastActivity extends AppCompatActivity implements FragmentHeade
             int realwindDirection= (int)Math.round ((double) windDirection.get("icon"));
             int realwindSpeed100m= (int)Math.round ((double) windSpeed100m.get("noaa")*3.6);
             int realwaterTemperature= (int)Math.round ((double) waterTemperature.get("noaa"));
-            int maxwaveHeight= (int)Math.round (((double)waveHeight.get("noaa"))*10);
+            int maxwaveHeight= (int)Math.round (((double)waveHeight.get("noaa"))*100);
             Log.d(TAG, "parseJson: "+"Ddd");
-            int minwaveHeight= (int)Math.round ((double)waveHeight.get("sg")*10);
+            int minwaveHeight= (int)Math.round ((double)waveHeight.get("sg")*100);
 
 
 
 
-                int k=0;
-                for(int z=0;z<96;z+=24){
-                    urlContainer = (JSONObject) byHour.get(z);
-                    Log.d(TAG, "parseJson: "+urlContainer.toString());
-                    JSONObject waveHeight1 = (JSONObject) ((JSONObject) urlContainer.get("waveHeight"));
-                    int maxwaveHeight1= (int)Math.round (((double)waveHeight1.get("noaa"))*10);
-                    String ackwardDate1 = (String)urlContainer.get("time");
-                    SimpleDateFormat myFormat1 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss+mm:mm");
-                    Date myDate1 = myFormat.parse(ackwardDate1);
-                    SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-                    String dayOfTheWeek = sdf.format(myDate1);
-                    DayForecast dayForecast=new DayForecast(ackwardDate1,maxwaveHeight1,myDate1);
-                    axisData[k]=dayOfTheWeek;
-                    yAxisData[k]=maxwaveHeight1;
-                    waveForecastArray.add(dayForecast);
-                    k+=1;
+            int k=0;
+            for(int z=0;z<96;z+=24){
+                urlContainer = (JSONObject) byHour.get(z);
+                Log.d(TAG, "parseJson: "+urlContainer.toString());
+                JSONObject waveHeight1 = (JSONObject) ((JSONObject) urlContainer.get("waveHeight"));
+                int maxwaveHeight1= (int)Math.round (((double)waveHeight1.get("noaa"))*100);
+                String ackwardDate1 = (String)urlContainer.get("time");
+                SimpleDateFormat myFormat1 = new SimpleDateFormat("yyyy-MM-dd'T'hh:mm:ss+mm:mm");
+                Date myDate1 = myFormat.parse(ackwardDate1);
+                SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
+                String dayOfTheWeek = sdf.format(myDate1);
+                DayForecast dayForecast=new DayForecast(ackwardDate1,maxwaveHeight1,myDate1);
+                axisData[k]=dayOfTheWeek;
+                yAxisData[k]=maxwaveHeight1;
+                waveForecastArray.add(dayForecast);
+                k+=1;
 
             }
-                x();
+            x();
 
             for(int i=0;i<4;i++){
                 Log.d(TAG, "parseJson: "+axisData[i]+yAxisData[i]);
@@ -343,7 +343,7 @@ public class ForecastActivity extends AppCompatActivity implements FragmentHeade
                     transaction.replace(R.id.twoFragment, weatherFragment);
                     transaction.commit();
 
-                     fragmentHeightWave= new FragmentHeightWave(maxwaveHeight);
+                    fragmentHeightWave= new FragmentHeightWave(maxwaveHeight);
                     Log.d(TAG, "run: ");
                     FragmentTransaction transaction1 = getSupportFragmentManager().beginTransaction();
                     transaction1.replace(R.id.fragment_wave, fragmentHeightWave);
@@ -422,9 +422,4 @@ public class ForecastActivity extends AppCompatActivity implements FragmentHeade
         Log.i("TAG", "received communication from child fragment");
     }
 
-
-
-
-
 }
-
