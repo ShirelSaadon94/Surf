@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/switch_thumb_normal_material_light"
+    tools:context=".Activity.MainActivity">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+
+        <FrameLayout
+            android:id="@id/twoFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:visibility="visible" />
+
+        </LinearLayout>
+        <HorizontalScrollView
+            android:background="@color/switch_thumb_normal_material_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scrollbars="horizontal">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:id="@+id/fragment_swell"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+
+                    android:background="@color/switch_thumb_normal_material_light"
+
+                    android:padding="10dp">
+
+                </FrameLayout>
+
+
+                <FrameLayout
+                    android:id="@+id/fragment_wind"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+
+                    android:padding="10dp">
+
+
+                </FrameLayout>
+
+                <FrameLayout
+
+                    android:id="@+id/fragment_water"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:background="@color/switch_thumb_normal_material_light"
+                    android:padding="10dp"></FrameLayout>
+                <FrameLayout
+                    android:id="@+id/fragment_wave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:padding="10dp">
+
+                </FrameLayout>
+
+            </LinearLayout>
+
+
+        </HorizontalScrollView>
+
+
+        <TextView
+            android:background="@color/switch_thumb_normal_material_light"
+            android:layout_gravity="center"
+            android:textColor="@color/error_color_material_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:text="WEEKLY FORECAST"/>
+
+        <FrameLayout
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="24dp"
+            android:layout_weight="1"
+            android:background="@color/switch_thumb_normal_material_light"
+            >
+
+
+            <lecho.lib.hellocharts.view.LineChartView
+                android:background="@color/switch_thumb_normal_material_light"
+                android:id="@+id/chart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </FrameLayout>
+    </LinearLayout>
+
+
+
+
+
+
+</RelativeLayout>
