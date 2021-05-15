@@ -2,6 +2,7 @@ package com.example.myapplication.Activity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Address;
@@ -59,7 +60,7 @@ public class ForecastActivity extends AppCompatActivity implements FragmentHeade
     private static final int PERMISSION_REGULAR_LOCATION_REQUEST_CODE = 133;
     private static final int PERMISSION_BACKGROUND_LOCATION_REQUEST_CODE = 134;
     FusedLocationProviderClient fusedLocationProviderClient;
-    Location currentLocation;
+    Location lastLocation;
     String city;
     FragmentHeader weatherFragment;
     FragmentHeightWave fragmentHeightWave;
@@ -80,8 +81,9 @@ public class ForecastActivity extends AppCompatActivity implements FragmentHeade
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forecast);
-        requestFirstLocationPermission();
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(ForecastActivity.this);
+        Intent intent = getIntent();
+        lastLocation=intent.getParcelableExtra("EXTRA_LOCATION");
+        getWaveForecast();
         axisData=new String[4];
         yAxisData=new int[4];
     }
@@ -134,7 +136,7 @@ public class ForecastActivity extends AppCompatActivity implements FragmentHeade
         Geocoder geocoder;
         List<Address> addresses;
         geocoder = new Geocoder(this, Locale.getDefault());
-        addresses = geocoder.getFromLocation(currentLocation.getLatitude(), currentLocation.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+        addresses = geocoder.getFromLocation(lastLocation.getLatitude(), lastLocation.getLongitude(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
         String address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
         Log.d(TAG, "getCity: " + address);
         city = addresses.get(0).getLocality();
@@ -144,34 +146,6 @@ public class ForecastActivity extends AppCompatActivity implements FragmentHeade
 
 
 
-    @SuppressLint("MissingPermission")
-    private void getLocation() {
-        fusedLocationProviderClient.getLastLocation()
-                .addOnSuccessListener(this, new OnSuccessListener<Location>() {
-                    @Override
-                    public void onSuccess(Location location) {
-                        // Got last known location. In some rare situations this can be null.
-                        if (location != null) {
-                            currentLocation = location;
-                            try {
-                                getCity();
-                                Log.d(TAG, "onSuccess: " + city);
-                                getWaveForecast();
-
-
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            // Logic to handle location object
-                        } else {
-                            return;
-                        }
-                    }
-                });
-
-
-        Log.d("pttt", "Location Success !!!");
-    }
 
 
 
@@ -194,60 +168,15 @@ public class ForecastActivity extends AppCompatActivity implements FragmentHeade
 
 
 
-    private void requestFirstLocationPermission() {
-        // Regular location permissions
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION},
-                PERMISSION_REGULAR_LOCATION_REQUEST_CODE);
-    }
 
-    private void requestSecondLocationPermission() {
-        // Background location permissions
-        ActivityCompat.requestPermissions(this,
-                new String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION},
-                PERMISSION_BACKGROUND_LOCATION_REQUEST_CODE);
-    }
-
-    private void request() {
-        boolean per1 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-        boolean per2 = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
-        boolean per3 = android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.Q || ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED;
-
-        if (!per1 || !per2) {
-            // if i can ask for permission
-            requestFirstLocationPermission();
-        } else if (!per3) {
-            // if i can ask for permission
-            requestSecondLocationPermission();
-        } else {
-            getLocation();
-        }
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case PERMISSION_REGULAR_LOCATION_REQUEST_CODE: {
-                request();
-                return;
-            }
-            case PERMISSION_BACKGROUND_LOCATION_REQUEST_CODE: {
-                request();
-                return;
-            }
-        }
-    }
     public void getWaveForecast() {
         Log.d(TAG, "getWaveForecast: ");
         String currentHour = getCurrentHour();
 
         String url = "http://api.stormglass.io/v2/weather/point?lat="
-                +currentLocation.getLatitude()+"&lng="+currentLocation.getLongitude()+"&params=swellDirection,swellPeriod,waterTemperature,waveHeight,windDirection,windSpeed100m&start="+currentHour+"&key="
+                +lastLocation.getLatitude()+"&lng="+lastLocation.getLongitude()+"&params=swellDirection,swellPeriod,waterTemperature,waveHeight,windDirection,windSpeed100m&start="+currentHour+"&key="
                 +getString(R.string.wave);
 
-        Log.d(TAG, "x: "+url);
-        //OkHttpClient okHttpClient1 = new OkHttpClient();
 
         Request request = new Request.Builder()
                 .url(url)
@@ -277,9 +206,9 @@ public class ForecastActivity extends AppCompatActivity implements FragmentHeade
         Log.d(TAG, "parseJson: ");
 
         try {
+            getCity();
             Log.d(TAG, "parseJson: ");
             waveForecastArray = new ArrayList<>();
-
             JSONObject all = new JSONObject(responseString);
             JSONArray byHour = (JSONArray) all.get("hours");
             JSONObject urlContainer = (JSONObject) byHour.get(0);
@@ -367,17 +296,6 @@ public class ForecastActivity extends AppCompatActivity implements FragmentHeade
 
 
 
-
-
-
-
-
-
-
-
-
-
-
                 }
             });
         } catch (Exception e) {
@@ -386,31 +304,6 @@ public class ForecastActivity extends AppCompatActivity implements FragmentHeade
 
     }
 
-
-    public String convertDegreeToCardinalDirection(int directionInDegrees){
-        String cardinalDirection="";
-        if( (directionInDegrees >= 348.75) && (directionInDegrees <= 360) ||
-                (directionInDegrees >= 0) && (directionInDegrees <= 33.75)    ){
-            cardinalDirection ="north";
-        } else if( (directionInDegrees >= 33.75 ) &&(directionInDegrees <= 78.75)){
-            cardinalDirection ="ne";
-        } else if( (directionInDegrees >= 78.75 ) && (directionInDegrees <= 101.25) ){
-            cardinalDirection = "east";
-        } else if( (directionInDegrees >= 101.25) && (directionInDegrees <= 168.75) ){
-            cardinalDirection = "es";
-        } else if( (directionInDegrees >= 168.75) && (directionInDegrees <= 213.75) ){
-            cardinalDirection = "south";
-        } else if( (directionInDegrees >= 213.75) && (directionInDegrees <= 258.75) ){
-            cardinalDirection = "sw";
-        } else if( (directionInDegrees >= 258.75) && (directionInDegrees <= 303.75) ){
-            cardinalDirection = "west";
-        } else if( (directionInDegrees >= 303.75) && (directionInDegrees <= 326.25) ){
-            cardinalDirection = "nw";
-        } else {
-            cardinalDirection = "?";
-        }
-        return cardinalDirection;
-    }
 
     @Override
     public void messageFromParentFragment(Uri uri) {

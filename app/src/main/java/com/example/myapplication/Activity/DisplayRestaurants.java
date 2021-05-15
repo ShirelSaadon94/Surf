@@ -1,6 +1,7 @@
 package com.example.myapplication.Activity;
 
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -31,9 +32,9 @@ import java.util.ArrayList;
 public class DisplayRestaurants extends AppCompatActivity {
     private static final String TAG = "pttt";
     private ListView mListView;
-    Double lng ,lat;
     private RecyclerView recyclerView;
     private ArrayList<Place> resultList=new ArrayList<Place>();
+    Location lastLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +42,11 @@ public class DisplayRestaurants extends AppCompatActivity {
         setContentView(R.layout.activity_resturants);
         recyclerView = findViewById(R.id.RECYCLER_VIEW_RES);
         Intent intent = getIntent();
-        String longitude = intent.getStringExtra("long");
-        String latitude = intent.getStringExtra("lat");
+        lastLocation=intent.getParcelableExtra("EXTRA_LOCATION");
+        Log.d(TAG, "onCreate: "+lastLocation.getLongitude() + " , " +lastLocation.getLatitude());
         resultList=new ArrayList<Place>();
-
-        lng = Double.parseDouble(longitude);
-        lat = Double.parseDouble(latitude);
         int radius = 1000;
-        openHttpRequestForPlaces(lat,lng);
+        openHttpRequestForPlaces(lastLocation.getLatitude(),lastLocation.getLongitude());
 
 
     }
@@ -62,7 +60,7 @@ public class DisplayRestaurants extends AppCompatActivity {
 
         int myRadius = 1500;
         String baseUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
-        String tempLocation = "" +lat+ "," + "" + lng;
+        String tempLocation = "" +lastLocation.getLatitude()+ "," + "" + lastLocation.getLongitude();
         String tempRadius = "&radius=" + myRadius;
         String tempType = "&type=restaurant";
         String apiKey = "&key=AIzaSyAXKuBMkrUW0J99RPpuOgC02rmS1DZNcCY";
@@ -168,12 +166,12 @@ public class DisplayRestaurants extends AppCompatActivity {
 
 
             int Radius = 6371;// radius of earth in Km
-            double dLat = Math.toRadians(lat - lat1);
-            double dLon = Math.toRadians(lng - lng1);
+            double dLat = Math.toRadians(lastLocation.getLatitude() - lat1);
+            double dLon = Math.toRadians(lastLocation.getLongitude() - lng1);
             Log.d(TAG, "CalculationByDistance: " + dLat + " , " + dLon);
             double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
                     + Math.cos(Math.toRadians(lat1))
-                    * Math.cos(Math.toRadians(lng)) * Math.sin(dLon / 2)
+                    * Math.cos(Math.toRadians(lastLocation.getLongitude())) * Math.sin(dLon / 2)
                     * Math.sin(dLon / 2);
             Log.d(TAG, "CalculationByDistance: " + a);
             double c = 2 * Math.asin(Math.sqrt(a));

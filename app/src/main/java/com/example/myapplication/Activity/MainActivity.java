@@ -82,8 +82,7 @@ public class MainActivity extends AppCompatActivity implements WeatherAirFragmen
                     Log.d(TAG, "startRestaurants: "+longit +lat);
                     Log.d(TAG, "onClick: Resturant");
                     Intent intent = new Intent(MainActivity.this, DisplayRestaurants.class);
-                    intent.putExtra("long", longit);
-                    intent.putExtra("lat", lat);
+                    intent.putExtra("EXTRA_LOCATION",currentLocation);
                     startActivity(intent);
                 }
             });
@@ -91,7 +90,7 @@ public class MainActivity extends AppCompatActivity implements WeatherAirFragmen
             cardViewProduct.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i= new Intent(MainActivity.this, ProductsActivity.class);
+                Intent i= new Intent(MainActivity.this,ProductsActivity.class);
                 startActivity(i);
             }
         });
@@ -100,8 +99,7 @@ public class MainActivity extends AppCompatActivity implements WeatherAirFragmen
             @Override
             public void onClick(View view) {
                 Intent i= new Intent(MainActivity.this, ForecastActivity.class);
-                i.putExtra("long", longit);
-                i.putExtra("lat", lat);
+                i.putExtra("EXTRA_LOCATION",currentLocation);
                 startActivity(i);
             }
         });
