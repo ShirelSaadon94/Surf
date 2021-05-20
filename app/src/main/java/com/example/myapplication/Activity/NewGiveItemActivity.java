@@ -83,7 +83,6 @@ public class NewGiveItemActivity extends AppCompatActivity implements PhotoModeL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_give_item);
-
         initViews();
         setViewListeners();
     }

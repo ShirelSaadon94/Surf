@@ -58,14 +58,14 @@ public class DisplayRestaurants extends AppCompatActivity {
         Log.d(TAG, "openHttpRequestForPlaces: Searching for places around" +
                 lat+" ," +lng);
 
-        int myRadius = 1500;
+        int myRadius = 3000;
         String baseUrl = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=";
         String tempLocation = "" +lastLocation.getLatitude()+ "," + "" + lastLocation.getLongitude();
         String tempRadius = "&radius=" + myRadius;
-        String tempType = "&type=restaurant";
+        String tempType="&type=restaurant";
         String apiKey = "&key=AIzaSyAXKuBMkrUW0J99RPpuOgC02rmS1DZNcCY";
 
-        String url = baseUrl + tempLocation + tempRadius + tempType + apiKey;
+        String url = baseUrl + tempLocation + tempRadius +tempType + apiKey;
         Log.d(TAG, "openHttpRequestForPlaces: "+url);
 
         OkHttpClient okHttpClient = new OkHttpClient();

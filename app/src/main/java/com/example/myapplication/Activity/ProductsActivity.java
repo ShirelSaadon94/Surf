@@ -45,10 +45,7 @@ public class ProductsActivity extends AppCompatActivity {
                 startActivity(i);
             }
         });
-
     }
-
-
     public void reviewsList() {
         Log.d(TAG, "reviewsList: ");
         ArrayList<Product> reviewsList=new ArrayList<Product>();

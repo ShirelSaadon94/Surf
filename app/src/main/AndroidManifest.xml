@@ -35,6 +35,10 @@
             android:configChanges="orientation"
             />
         <activity
+            android:name=".Activity.DisplayNearbyBeach"
+            android:configChanges="orientation"
+            />
+        <activity
             android:name=".Activity.DisplayRestaurants"
             android:configChanges="orientation"
             />
